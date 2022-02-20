@@ -3,7 +3,6 @@ package videoStore;
 
 import java.util.Vector;
 
-import videoStore.Rental;
 
 /**
  * M. Fowler, et al., Refactoring, Improving the design of existing code,
@@ -21,36 +20,65 @@ public class Customer {
 		this.name = name;
 		rentals = new Vector<Rental>();
 	}
+	
 
 	public void addRentals(Rental arg) {
 		rentals.addElement(arg);
 	}
 
+	
 	public String getName() {
 		return name;
 	}
 
-	public String statement() {
-		double totalAmount = 0;
-		int frequentRenterPoints = 0;
+	
+	public String englishStatement() {
 
 		String result = "Rental Record for " + getName() + "\n";
 
 		for (Rental each : rentals) {
-			double thisAmount;
-
-			// determines amount for each line
-			thisAmount = each.amountFor();
-			// add frequent renter points
-			frequentRenterPoints += each.pointsFor();
 			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + thisAmount + "\n";
-			totalAmount += thisAmount;
+			result += "\t" + each.getMovie().getTitle() + "\t" + each.amountFor() + "$\n";
 		}
 		// add footer lines
-		result += "Amount owed is " + totalAmount + "\n";
-		result += "You earned " + frequentRenterPoints + " frequent renter points\n";
+		result += "Amount owed is " + getTotalAmount() + "$\n";
+		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points\n";
 		return result;
+	}
+	
+	public String frenchStatement() {
+
+		String result = "Facture de location pour " + getName() + "\n";
+
+		for (Rental each : rentals) {
+			// show figures for this rental
+			result += "\t" + each.getMovie().getTitle() + "\t" + each.amountFor() + "$\n";
+		}
+		// add footer lines
+		result += "Le montant dû est : " + getTotalAmount() + "$\n";
+		result += "Vous avez obtenu " + getTotalFrequentRenterPoints() + " points de fidélité\n";
+		return result;
+	}
+
+	
+	public int getTotalFrequentRenterPoints() {
+
+		int totalPoints = 0;
+
+		for (Rental each : rentals) {
+			totalPoints += each.pointsFor();
+		}
+		return totalPoints;
+	}
+
+
+	public double getTotalAmount() {
+		double totalAmount = 0;
+		
+		for (Rental each : rentals) {
+			totalAmount += each.amountFor();
+		}
+		return totalAmount;
 	}
 
 	
