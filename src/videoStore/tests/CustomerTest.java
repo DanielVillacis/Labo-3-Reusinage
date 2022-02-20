@@ -44,8 +44,7 @@ public class CustomerTest {
 		expected += "\tLes gars chauds se cachent pour vomir\t2.0\n";
 		expected += "Amount owed is 23.5\n";
 		expected += "You earned 7 frequent renter points\n";
-		System.out.println(expected);
-		System.out.println(grandmaman.statement());
+		
 		assertEquals(grandmaman.statement(),expected);
 
 	}
