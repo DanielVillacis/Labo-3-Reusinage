@@ -25,41 +25,25 @@ public class Customer {
 	public void addRentals(Rental arg) {
 		rentals.addElement(arg);
 	}
+	
+	public Vector<Rental> getRentals() {
+		return rentals;
+	}
 
 	
 	public String getName() {
 		return name;
 	}
 
-	
-	public String englishStatement() {
-
-		String result = "Rental Record for " + getName() + "\n";
-
-		for (Rental each : rentals) {
-			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + each.amountFor() + "$\n";
-		}
-		// add footer lines
-		result += "Amount owed is " + getTotalAmount() + "$\n";
-		result += "You earned " + getTotalFrequentRenterPoints() + " frequent renter points\n";
-		return result;
+	public String englishStatement() {	
+		EnglishStatement enSt = new EnglishStatement(this);
+        return enSt.print(this);
 	}
 	
 	public String frenchStatement() {
-
-		String result = "Facture de location pour " + getName() + "\n";
-
-		for (Rental each : rentals) {
-			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + each.amountFor() + "$\n";
-		}
-		// add footer lines
-		result += "Le montant dû est : " + getTotalAmount() + "$\n";
-		result += "Vous avez obtenu " + getTotalFrequentRenterPoints() + " points de fidélité\n";
-		return result;
+		FrenchStatement frSt= new FrenchStatement(this);
+		return frSt.print(this);
 	}
-
 	
 	public int getTotalFrequentRenterPoints() {
 
